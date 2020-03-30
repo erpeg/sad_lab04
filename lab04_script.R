@@ -6,7 +6,6 @@ Pb <- 0.26
 Pb_dopelnienie <- 1-Pb
 Pab <- 0.4
 Pa_b_dopelnienie <- 0.76
-Pa_dopelnienie_b <- 1-Pa_b
 N = 110
 
 # Wartości grup n przed i po 2000:
@@ -34,7 +33,31 @@ chisq.test(kondyg, correct=F)
 # skutkując odrzuceniem H0 przy poziomie istotności 0,05. Ponadto wartość p-value przy chisq.text była jeszcze niższa niż ta obliczona przeze mnie.
 
 # Zadanie 2
+Zadluzenie.gmin <- read.delim("Zadluzenie_gmin.csv", colClasses = c('factor', 'factor', 'factor', 'numeric', 'factor', 'factor'))
 
+library(stringr)
 
+# Wektor z kodami
+kody_reg <- str_sub(Zadluzenie.gmin$Kod.Teryt, end = 2)
 
+# Dodanie kodów do df
+Zadluzenie.gmin$Wojewodztwa <- kody_reg
 
+# Slownik wojewodztw
+slownik <- c('02' = 'Dolnośląskie', '04' = 'Kujawsko-pomorskie',
+             '06' = 'Lubelskie', '08' = 'Lubuskie',
+             '10' = 'Łódzkie', '12' = 'Małopolskie',
+             '14' = 'Mazowieckie', '16' = 'Opolskie', 
+             '18' = 'Podkarpackie', '20' = 'Podlaskie',
+             '22' = 'Pomorskie', '24' = 'Śląskie',
+             '26' = 'Świętokrzyskie', '28' = 'Warmińsko-mazurskie',
+             '30' = 'Wielkopolskie',  '32' = 'Zachodniopomorskie')
+
+# Zamiana kodów na województwa
+Zadluzenie.gmin$Wojewodztwa <- slownik[c(kody_reg)]
+
+# Usuwam odstające wyniki
+Zadluzenie.gmin <- Zadluzenie.gmin[-2478, ] # Ostrowice
+Zadluzenie.gmin <- Zadluzenie.gmin[-2477, ] # Rewal
+
+# Zadanie 3
