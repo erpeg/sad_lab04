@@ -23,7 +23,7 @@ wektor_do_kond <- c(O11, O12, O21, O22)
 # Tworzę tabelę kontygencji z wcześniej przygotowanego wektora
 kondyg <- matrix(wektor_do_kond, nrow=2, ncol=2, byrow=TRUE)
 
-# Obliczam p-value za pomocą funkcji pchisq i sumuję ze wzoru
+# Obliczam p-value za pomocą funkcji pchisq i sumuję ze wzoru, df=1, ponieważ w tabeli 2x2 mamy 1 stopień swobody
 p_value <- sum(1-pchisq(kondyg, df=1))
 
 # Wykonuję test chisq.test
@@ -61,3 +61,14 @@ Zadluzenie.gmin <- Zadluzenie.gmin[-2478, ] # Ostrowice
 Zadluzenie.gmin <- Zadluzenie.gmin[-2477, ] # Rewal
 
 # Zadanie 3
+gminy = 2476
+mean_debt <- mean(Zadluzenie.gmin$Zadłużenie.gmin)
+# H0 u=25
+# H1 u<25
+odchylenie <- sd(Zadluzenie.gmin$Zadłużenie.gmin)
+T0 <- (mean_debt-25)/odchylenie*sqrt(gminy-1)
+# za alfa przyjmuję 0.05
+# z tabeli odczytuję wynik dla T0
+t.test(Zadluzenie.gmin$Zadłużenie.gmin)
+
+# Nie wiem jak dalej odnieść swoje wyniki
